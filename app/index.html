@@ -1,0 +1,132 @@
+<!doctype html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <title>walletApp</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+  </head>
+  <body ng-app="walletApp" ng-controller="WalletCtrl">
+    <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <!-- Add your site or application content here -->
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href>walletApp</a>
+        </div>
+        <div class="collapse navbar-collapse" id="js-navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="#/">Home</a></li>
+            <li><a href ng-click="reset()">Reset</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main content -->
+    <main class="container">
+
+      <!-- Grand total -->
+      <div class="row">
+        <div class="well col-sm-12">
+          <h1>walletApp</h1>
+          <p class="lead">
+            You currently have <strong>{{wallet.total | currency:""}}</strong> <i class="fa fa-eur"></i> in your wallet.
+          </p>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <div class="row">
+
+      <!-- New transaction form -->
+        <div class="well">
+          <form class="form row" name="transactionForm" ng-submit="transactionForm.$valid && newTransaction(option, amount)">
+            <div class="form-group col-xs-3">
+              <select class="form-control" ng-model="option" ng-options="obj.name as obj.value for obj in optionList" required></select>
+            </div>
+            <div class="form-group col-xs-7">
+              <div class="input-group">
+                <input class="form-control" name="amount" ng-model="amount" type="number" min="0" step="any" placeholder="Insert transaction amount" aria-describedby="euro-addon" required />
+                <span class="input-group-addon" id="euro-addon">€</span>
+              </div>
+            </div>
+            <div class="form-group col-xs-2">
+              <input class="form-control" type="submit" value="Submit"/>
+            </div>
+          </form>
+          <div ng-messages="transactionForm.amount.$error" class="errors row">
+            <p ng-message="number" class="col-xs-12 text-center">Only numbers allowed!</p>
+          </div>
+        </div>
+
+        <!-- Transaction history -->
+        <div class="well">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="item in wallet.transactions track by $index">
+                <td>{{item.date}}</td>
+                <td>{{item.amount | currency:""}} €</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer section -->
+    <footer class="footer">
+      <div class="container">
+        <p><span class="glyphicon glyphicon-heart"></span> built with Yeoman, Bootstrap, AngularJS and Atom</p>
+      </div>
+    </footer>
+
+    <!-- build:js(.) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
+    <script src="bower_components/angular-messages/angular-messages.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <script src="scripts/app.js"></script>
+    <script src="scripts/controllers.js"></script>
+    <!-- endbuild -->
+</body>
+</html>
